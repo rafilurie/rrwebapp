@@ -1,0 +1,12 @@
+h1 {
+	font-size: 40px;
+	color: #104BA6;
+	font-weight: 700;
+	text-align: center;
+	line-height: 48px;
+	margin: 70px 0px 100px 0px;
+}
+
+.articles-container{
+	margin: 25px 0px 0px 0px;
+}

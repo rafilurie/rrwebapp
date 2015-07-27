@@ -1,0 +1,64 @@
+body {
+	background: #FCFCFC;
+}
+
+#empty {
+	margin-top: 80px;
+	font-family: Montserrat;
+}
+
+/*#upload-btn {
+	margin: 20px 0px 0px 0px;
+	height: 45px;
+	width: 155px;
+	font-size: 14px;
+	color: white;
+	background: #6D6D6D;
+	border-radius: 5px;
+	border: solid #6D6D6D 1px;
+	transition: all 0.3s ease;
+}
+
+#upload-btn:hover {
+		background: rgba(109, 109, 109, 0.7);
+		border: 1px solid rgba(109, 109, 109, 0.7);
+		transition: all 0.3s ease;
+}*/
+
+h1 {
+	font-size: 40px;
+	color: #104BA6;
+	font-weight: 700;
+	text-align: center;
+	line-height: 48px;
+	margin: 70px 0px 100px 0px;
+}
+
+.valueprops {
+	margin-left: 100px;
+}
+
+.photo {
+	text-align: center;
+}
+
+.img {
+	height: 100px;
+	width: auto;
+	margin-bottom: 35px;
+}
+
+.image-blurb {
+	font-size: 18px;
+	line-height: 22px;
+	color: #6D6D6D;
+	text-align: center;
+}
+
+.value {
+	border-right: solid rgba(222, 100, 101, 0.25) 1px;
+}
+
+.value:last-child {
+	border-right: none;
+}

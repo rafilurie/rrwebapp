@@ -1,0 +1,22 @@
+.bar {
+	font-family: Montserrat;
+	background: #104BA6;
+	height: 80px;
+}
+
+#home-btn {
+	margin-left: 80px;
+}
+
+#profile-link {
+	margin: 0px 20px 0px 0px;
+}
+
+#signout-link {
+	margin: 0px 80px 0px 0px;
+}
+
+.main-nav {
+	color: white !important;
+	margin-top: 14px;
+}

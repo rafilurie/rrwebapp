@@ -1,0 +1,68 @@
+<link href= '{{ url_for("static", filename="article_post_partial.css") }}' rel='stylesheet' />
+
+
+<div class="article-container col-md-12">
+    <div class="content-container col-md-offset-1">
+
+        <div class="row">
+            <a class="article-title" href="{{ article.get_article_url() }}" target="_blank">{{ article.title }}</a>
+        </div>
+
+        <div class="row posted-line">
+            <span class="posted-by">Posted by </span>
+            <a class="article-poster" href='/{{ article.get_article_user().id }}'>{{ article.get_article_user().first_name }} {{ article.get_article_user().last_name }}</a>
+
+            <!-- Difference is less than a minute -->
+            {% if ((curr_time - article.created).total_seconds()) < 60 %}
+                {% if ((curr_time - article.created).total_seconds())//1 == 1.0 %}
+                    <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//1 }} second ago</span>
+                {% else %}
+                    <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//1 }} seconds ago</span>
+                {% endif %}
+
+            <!-- Difference is more than a minute and less than an hour -->
+            {% elif ((curr_time - article.created).total_seconds()) < 3600 %}
+                {% if ((curr_time - article.created).total_seconds())//60 == 1.0 %}
+                    <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//60 }} minute ago</span>
+                {% else %}
+                    <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//60 }} minutes ago</span>
+                {% endif %}
+
+            <!-- Difference is more than an hour and less than a day -->
+            {% elif 3600 <= ((curr_time - article.created).total_seconds()) <= 86400 %}
+                {% if ((curr_time - article.created).total_seconds())//3600 == 1.0 %}
+                    <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//3600 }} hour ago</span>
+                {% else %}
+                    <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//3600 }} hours ago</span>
+                {% endif %}
+
+            <!-- Difference is more than an day and less than a month -->
+            {% elif 86400 <= ((curr_time - article.created).total_seconds()) <= 2592000 %}
+                {% if ((curr_time - article.created).total_seconds())//86400 == 1.0 %}
+                    <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//86400 }} day ago</span>
+                {% else %}
+                    <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//86400 }} days ago</span>
+                {% endif %}
+
+            <!-- Difference is more than a month and less than a year -->
+            {% elif 2592000 <= ((curr_time - article.created).total_seconds()) <= 31104000 %}
+                {% if ((curr_time - article.created).total_seconds())//86400 == 1.0 %}
+                    <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//2592000 }} month ago</span>
+                {% else %}
+                    <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//2592000 }} months ago</span>
+                {% endif %}
+
+            <!-- Difference is more than a year -->
+            {% elif 31104000 <= ((curr_time - article.created).total_seconds()) %}
+                {% if ((curr_time - article.created).total_seconds())//86400 == 1.0 %}
+                    <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//31104000 }} year ago</span>
+                {% else %}
+                    <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//31104000 }} years ago</span>
+                {% endif %}
+
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,39 @@
+.article-container{
+	padding: 7px 5px 7px 5px;
+	margin: 9px 0px 9px 0px;
+	border: solid #6D6D6D 1px;
+	border-radius: 5px;
+
+}
+
+.content-container{
+
+}
+
+.article-title {
+	font-size: 18px;
+	color: black;
+}
+
+.article-title:hover {
+	color: #104BA6;
+	text-decoration: none;
+}
+
+.posted-line{
+	font-style: italic;
+}
+
+.posted-by{
+	color: #6D6D6D;
+
+}
+
+.article-poster {
+	color: #104BA6 !important;
+}
+
+.article-poster:hover {
+	color: #104BA6;
+	text-decoration: none;
+}

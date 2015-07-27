@@ -1,0 +1,117 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+<link href= '{{ url_for("static", filename="empty.css") }}' rel='stylesheet' />
+<!-- <link href= '{{ url_for("static", filename="modal.css") }}' rel='stylesheet' />
+<script src='{{ url_for("static", filename="img_preview.js") }}'></script> -->
+
+{% include 'navbar_partial.html' %}
+
+<div class="container-fluid non-nav" id="empty">
+
+<!-- 	<div class="col-md-offset-10">
+		<button id="upload-btn" type="" data-toggle="modal" data-target="#myModal">UPLOAD A PHOTO</button>
+	</div>
+	<hr> -->
+
+	<h1 class="col-md-8 col-md-offset-2">You don't have any content yet.<br>Follow these steps to get started.</h1>
+
+	<div class="row valueprops">
+		<div class="col-md-3 col-md-offset-1 value">
+			<div class="row photo">
+				<img class="img" id="photo-upload-img" src="{{ url_for('static', filename='photo-upload.png') }}" alt="Photo Upload">
+			</div>
+			<div class="row image-blurb">
+				Download the Chrome Extension
+			</div>
+		</div>
+		<div class="col-md-3 value">
+			<div class="row photo">
+				<img class="img" id="question-icon-img" src="{{ url_for('static', filename='question-icon.png') }}" alt="Question">
+			</div>
+			<div class="row image-blurb">
+				Add Content
+			</div>
+		</div>
+		<div class="col-md-3 value">
+			<div class="row photo">
+				<img class="img" id="pdf-icon-img" src="{{ url_for('static', filename='pdf-icon.png') }}" alt="PDF Icon">
+			</div>
+			<div class="row image-blurb">
+				Read from your friends,<br> follow thought leaders
+			</div>
+		</div>
+
+	</div>
+
+	<!-- <div>
+		ARTICLES
+		{% for article in articles %}
+			<div>
+				<a href="{{ article.get_article_url() }}" target="_blank">{{ article.title.upper() }}</a>
+				<span>Posted By: {{ article.user_id }}</span>
+			</div>
+		{% endfor %}
+	</div> -->
+
+	<!-- <div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+
+	    	//MODAL CONTENT
+	    	<div class="modal-content">
+
+	    		<div class="modal-header">
+	    			<button type="button" class="close" data-dismiss="modal">&times;</button>
+	    			<h4 class="modal-title">UPLOAD A PHOTO</h4>
+	    		</div>
+
+	    		<form method="POST" action="/upload" enctype="multipart/form-data">
+		    		<div class="modal-body row">
+
+		    			<div class="col-md-6">
+								<div class="meta-container">
+								<div class="upload-container">
+			    				<img id="output"/>
+			    				<input id="choose-file" name ="file" type="file" accept="image/*" onchange="loadFile(event)">
+								</div>
+							</div>
+		    			</div>
+
+		    			<div class="col-md-6">
+
+		    				<div class="input-group">
+		    					<p class="input-header">Who sent you this message?</p>
+		    					<p class="input-subheader">Give this person a nickname to preserve annonymity.</p>
+		    					<input class="input-field" type="text" name="name" placeholder="Name">
+		    				</div>
+
+		    				<div class="input-group">
+		    					<p class="input-header">When did this happen?</p>
+		    					<input class="input-field" type="date" name="date" placeholder="Select a date">
+		    				</div>
+
+		    				<div class="input-group">
+		    					<p class="input-header">What's the context?</p>
+		    					<p class="input-subheader"></p>
+		    					<textarea class="input-field" id="textfield" rows="10" placeholder="Add some notes about the context of this exchange for future reference." name="content"></textarea>
+		    				</div>
+
+		    			</div>
+		    		</div>
+
+		    		<div class="modal-footer">
+		    			<input type="submit" class="btn btn-default pull-left" id="donebtn" value="DONE">
+		    			<button type="button" class="btn btn-default pull-left" id="cancelbtn" data-dismiss="modal">CANCEL</button>
+		    		</div>
+	    		</form>
+
+	    	</div>
+	    	//MODAL ENDS
+
+	    </div>
+	</div> -->
+
+</div>
+
+{% endblock %}

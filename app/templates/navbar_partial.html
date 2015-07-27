@@ -1,0 +1,26 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+<link href= '{{ url_for("static", filename="navbar_partial.css") }}' rel='stylesheet' />
+
+<!-- NAVIGATION BAR -->
+<nav class="navbar navbar-default navbar-fixed-top navigation">
+	<div class="container-fluid bar">
+		<div class="navbar-header">
+			<a id="home-btn" class="navbar-brand main-nav" href="/welcome">ReadMate</a>
+		</div>
+
+		<div>
+			<ul class="nav navbar-nav navbar-right">
+    			{% if session['user_id'] %}
+    			<li id="profile"><a class ="main-nav" href="/{{ session['user_id'] }}">My Profile</a></li>
+    			{% endif %}
+    			<li id="home-link"><a class ="main-nav" href="/">Home</a></li>
+				<li id="signout-link"><a class ="main-nav" href="/logout">Sign Out</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+{% endblock %}

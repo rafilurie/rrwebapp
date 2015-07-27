@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<link href= '{{ url_for("static", filename="empty.css") }}' rel='stylesheet' />
+<link href= '{{ url_for("static", filename="feed.css") }}' rel='stylesheet' />
+<script src='{{ url_for("static", filename="btn_show.js") }}'></script>
+<script src='{{ url_for("static", filename="img_preview.js") }}'></script>
+
+{% include 'navbar_partial.html' %}
+
+<div class="container-fluid non-nav" id="empty">
+
+    <div class="col-md-12">
+        <h1>ARTICLES</h1>
+
+        <div class="articles-container col-md-8 col-md-offset-2">
+            
+            {% for article in articles %}
+                {% include 'article_post_partial.html' %}
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'footer_partial.html' %}
+
+{% endblock %}
