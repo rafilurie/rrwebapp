@@ -25,6 +25,12 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(255), nullable=False, server_default='')
     created = db.Column(db.DateTime())
 
+    # Other pieces of profile information that a user can add/edit
+    about_me = db.Column(db.String(140))
+    job_title = db.Column(db.String(120))
+    company = db.Column(db.String(64))
+    linkedin_url = db.Column(db.String(140))
+
     # Other columns
     reset_password_token = db.Column(db.String(100), nullable=False, server_default='')
     deleted = db.Column(db.DateTime())

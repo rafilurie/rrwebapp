@@ -1,0 +1,52 @@
+body {
+	background: #FCFCFC;
+}
+
+#user-profile {
+	margin-top: 80px;
+	font-family: Montserrat;
+}
+
+h1 {
+	font-size: 40px;
+	color: #104BA6;
+	font-weight: 700;
+	text-align: center;
+	line-height: 48px;
+	margin: 70px 0px 100px 0px;
+}
+
+#left-column {
+	border: solid red 1px;
+}
+
+#following-container {
+	border: solid red 1px;
+}
+
+#edit-profile-btn {
+
+}
+
+#right-column {
+	border: solid red 1px;
+}
+
+
+#aboutme-things {
+	border: solid red 1px;
+	margin-top: 20px;
+}
+
+.extra-info-header {
+	padding: 3px 0px 3px 0px;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+#edit-aboutme {
+}
+
+#about-me-text{
+	font-size: 12px;
+}

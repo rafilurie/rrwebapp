@@ -19,10 +19,17 @@ from datetime import datetime
 # def index():
 #     return "Hello, World!"
 
-# REDIRECT TO HOMEPAGE
+# FEED OF ARTICLES
 @app.route("/")
 def index():
-    return redirect(url_for("welcome"))
+	try:
+		logged_in_user = session["user_id"]
+	except KeyError:
+		return redirect(url_for("welcome"))
+	# articles = Article.query.order_by(Article.created.desc()).all()
+	me = User.query.filter(User.id == logged_in_user).first()
+	articles = me.followed_posts().all()
+	return render_template("feed.html", articles=articles, curr_time=datetime.now())
 
 # HOMEPAGE
 @app.route("/welcome", methods=["GET", "POST"])
@@ -59,28 +66,23 @@ def welcome():
 @app.route("/welcome/login", methods=["GET", "POST"])
 def login():
     try:
-        password = request.form["password"]
-        username = request.form["username"]
+        email = request.form["login-email"]
+        password = request.form["login-password"]
     except:
-        return render_template("login.html", form=request.form, error="No username or password provided.")
+        return render_template("index.html", form=request.form, error="No email or password provided.")
 
-    jeopardy_password = "emergency"
-
-    if enforce_password_requirements(password) and validate_email(username):        
-        if password == jeopardy_password:
-            return render_template("empty.html")
+    if enforce_password_requirements(password) and validate_email(email):        
         
-        db_user = User.query.filter(User.username == username and User.password == password).first()
+        db_user = User.query.filter(User.email == email and User.password == password).first()
 
         if not db_user:
-            return render_template("login.html", form=request.form, error="No user associated with that username and password.")
-        print "WE ARE HRE"
+            return render_template("index.html", form=request.form, error="No user associated with that email and password.")
         login_user(db_user)
         db.session.add(db_user)
         db.session.commit()
         session["user_id"] = db_user.id
         return redirect(url_for("empty"))
-    return render_template("login.html", form=request.form)
+    return render_template("index.html", form=request.form)
 
 # LOGOUT
 @app.route("/logout")
@@ -101,7 +103,7 @@ def empty():
     except KeyError:
         return redirect(url_for("index"))
     if Article.query.filter(Article.user_id == logged_in_user).count() != 0:
-        return redirect(url_for("feed"))
+        return redirect(url_for("index"))
     return render_template("empty.html")
 
 # POST FOR CHROME EXTENSION TO ADD DB TO ARTICLE
@@ -137,26 +139,13 @@ def post():
 
                 db.session.commit()
 
-                return redirect(url_for("feed"))
+                return redirect(url_for("index"))
             except:
                 error = "Error adding article, please try again."
         else:
             error = "No article was supplied."
         return redirect(url_for("empty"))
     return redirect(url_for("empty"))
-
-# FEED OF ARTICLES
-@app.route("/feed")
-def feed():
-    try:
-        logged_in_user = session["user_id"]
-    except KeyError:
-        return redirect(url_for("index"))
-    # articles = Article.query.order_by(Article.created.desc()).all()
-    me = User.query.filter(User.id == logged_in_user).first()
-    articles = me.followed_posts().all()
-    return render_template("feed.html", articles=articles, curr_time=datetime.now())
-
 
 # PROFILE PAGE
 @app.route("/<id>")
@@ -237,6 +226,47 @@ def unfollow(username):
     flash('You have stopped following ' + username + '.')
     return redirect(url_for('profile', id=user.id))
 
+# EDIT ABOUT
+@app.route("/edit/aboutme", methods=["POST"])
+def add_comment():
+	try:
+		logged_in_user = session["user_id"]
+	except KeyError:
+		return redirect(url_for("index"))
+	content = request.json.get('content')
+	user = User.query.filter(User.id == logged_in_user).first()
+	user.about_me = content
+	db.session.commit()
+	return json.dumps({'success': True, 'contents': content}), 200, {'ContentType': 'application/json'}
+
+# EDIT ABOUT
+@app.route("/edit/profile", methods=["POST"])
+def edit_profile():
+	try:
+		logged_in_user = session["user_id"]
+	except KeyError:
+		return redirect(url_for("index"))
+
+	# Get the information that was passed through
+	about_me = request.json.get('about_me')
+	job_title = request.json.get('job_title')
+	company = request.json.get('company')
+	linkedin = request.json.get('linkedin')
+
+	# Update the information for the user
+	user = User.query.filter(User.id == logged_in_user).first()
+	if (about_me != user.about_me) and (about_me != ""):
+		user.about_me = about_me
+	if (job_title != user.job_title) and (job_title != ""):
+		user.job_title = job_title
+	if (company != user.company) and (company != ""):
+		user.company = company
+	if (linkedin != user.linkedin_url) and (linkedin != ""):
+		user.linkedin_url = linkedin
+	db.session.commit()
+	return json.dumps({'success': True, 'about_me': about_me, 'job_title': job_title, 'company': company, 'linkedin': linkedin}), 200, {'ContentType': 'application/json'}
+
+
 
 ###################################################################################################################
 
@@ -277,7 +307,7 @@ def unfollow(username):
 #                 filename = "{0}.{1}".format(db_file.id, extension)
 #                 file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 #                 flash("Your photo was uploaded")
-#                 return redirect(url_for("feed"))
+#                 return redirect(url_for("index"))
 #             except:
 #                 error = "Error saving file, please try again."
 #         else:

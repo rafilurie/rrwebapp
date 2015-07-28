@@ -1,31 +1,56 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<link href= '{{ url_for("static", filename="empty.css") }}' rel='stylesheet' />
-<link href= '{{ url_for("static", filename="perp.css") }}' rel='stylesheet' />
-<script src='{{ url_for("static", filename="btn_show.js") }}'></script>
-<script src='{{ url_for("static", filename="img_preview.js") }}'></script>
+<link href= '{{ url_for("static", filename="profile.css") }}' rel='stylesheet' />
+<script src='{{ url_for("static", filename="edit_profile.js") }}'></script>
 
 {% include 'navbar_partial.html' %}
 
-<div class="container-fluid non-nav" id="empty">
+<div class="container-fluid non-nav" id="user-profile">
 
-    <div class="col-md-12">
+    <h1 class="row">{{ user.first_name }} {{ user.last_name }}</h1>
 
-        <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+    <!-- LEFT SIDE -->
+    <div class="col-md-4" id="left-column">
+        
+        <!-- Display following/follower information -->
+        <div class="row" id="following-container">
+            {{ user.followers.count()-1 }} followers | 
+            {% if user.id == me.id %}
+                <button id="edit-profile-btn" type="" data-toggle="modal" data-target="#edit-profile-modal">Edit Profile</button>
+            {% elif not me.is_following(user) %}
+                <a href="{{ url_for('follow', username=user.username) }}">Follow</a>
+            {% else %}
+                <a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>
+            {% endif %}
+        </div>
 
-        <p>
-        {{ user.followers.count() }} followers | 
-        {% if user.id == me.id %}
-            <a>Edit your profile</a>
-        {% elif not me.is_following(user) %}
-            <a href="{{ url_for('follow', username=user.username) }}">Follow</a>
-        {% else %}
-            <a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>
+        <!-- Display Extra information -->
+        {% if user.about_me %}
+            About Me: <div id='about_me-text'>{{ user.about_me }}</div>
         {% endif %}
-        </p>
+        {% if user.job_title %}
+            Job Title: <div id='job_title-text'>{{ user.job_title }}</div>
+        {% endif %}
+        {% if user.company %}
+            Company: <div id='company-text'>{{ user.company }}</div>
+        {% endif %}
+        {% if user.linkedin_url %}
+            LinkedIn: <div id='linkedin-text'>{{ user.linkedin_url }}</div>
+        {% endif %}
 
-        <div class="articles-container col-md-8 col-md-offset-2">
+        <div id="edit-profile-modal" class="modal" data-backdrop=""  role="dialog">
+            <div class="modal-dialog">
+                {% include 'modal_partial.html' %}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ARTICLES -->
+    <div class="col-md-8" id="right-column">
+
+        <div class="articles-container col-md-8">
             
             {% for article in articles %}
                 {% include 'article_post_partial.html' %}

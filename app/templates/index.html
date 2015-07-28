@@ -6,8 +6,15 @@
 <script src='{{ url_for("static", filename="signup_btn.js") }}'></script>
 
 <div id="header">
-	<div id="logo-container">
-		<span id="logo-text" class="col-md-offset-1">ReadMate</span>
+	<div id="logo-container" class="col-md-2 col-md-offset-1">
+		<span id="logo-text">ThoughtMic</span>
+	</div>
+	<div id="login-container" class="col-md-5 col-md-offset-4">
+		<form action="{{ url_for('login') }}" method="post">
+			<input class="login-input" type="text" name="login-email" id="login-email" placeholder="Email address">
+			<input class="login-input" type="password" name="login-password" id="login-password" placeholder="Password">
+			<input id="login-submit-btn" type="submit" value="LOGIN">
+		</form>
 	</div>
 </div>
 
@@ -31,22 +38,22 @@
 	<div class='col-md-offset-4'>
 		<div id="homepage-box" class="row">
 			<div class="box-content">
-				<div class="row">
+<!-- 				<div class="row">
 					<button id="signup-btn" class="btns" type="">Sign Up</button>
 					<button id="login-btn" class="btns" type="">Login</button>
 				</div>
 				<br>
-				<!-- <img id="signup-img" src="{{ url_for('static', filename='signup.png') }}" /> -->
-				<div id="privacy-assurance">
-					We respect your privacy and will never share your information with anyone.
+				<img id="signup-img" src="{{ url_for('static', filename='signup.png') }}" /> -->
+				<div id="signup-blurb">
+					Sign up here to get started.
 				</div>
 				<form action="" method="post">
-					<input class="login-input" type="text" name="first_name" id="first_name" placeholder="First Name">
-					<input class="login-input" type="text" name="last_name" id="last_name" placeholder="Last Name">
-					<input class="login-input-2" type="text" name="email" id="email" placeholder="Email Address">
-					<input class="login-input-2" type="password" name="password" id="password" placeholder="Password">
+					<input class="signup-input" type="text" name="first_name" id="first_name" placeholder="First Name">
+					<input class="signup-input" type="text" name="last_name" id="last_name" placeholder="Last Name">
+					<input class="signup-input-2" type="text" name="email" id="email" placeholder="Email Address">
+					<input class="signup-input-2" type="password" name="password" id="password" placeholder="Password">
 					<br>
-					<input id="login-submit-btn" type="submit" value="GET STARTED">
+					<input id="signup-submit-btn" type="submit" value="GET STARTED">
 				</form>
 			</div>
 		</div>
