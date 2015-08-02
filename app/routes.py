@@ -148,66 +148,71 @@ def post():
     return redirect(url_for("empty"))
 
 # PROFILE PAGE
-@app.route("/<id>")
-def profile(id):
+@app.route("/<user_id>")
+def profile(user_id):
     try:
         logged_in_user = session["user_id"]
+        print "User session: ", session["user_id"]
+        print "User logged_in_user: ", logged_in_user
     except KeyError:
         return redirect(url_for("index"))
-    articles = Article.query.filter(Article.user_id == id).order_by(Article.created.desc()).all()
-    user = User.query.filter(User.id == id).first()
+    print "User ID: ", user_id
+    articles = Article.query.filter(Article.user_id == user_id).order_by(Article.created.desc()).all()
+    print "ARTICLES: ", articles
+    user = User.query.filter(User.id == user_id).first()
+    print "USER :", user
     me = User.query.filter(User.id == logged_in_user).first()
 
     return render_template("profile.html", articles=articles, curr_time=datetime.now(), user=user, me=me)
 
 # FOLLOW SOMEONE ELSE
 
-@app.route('/follow/<username>')
+@app.route('/follow/<user_id>')
 @login_required
-def follow(username):
+def follow(user_id):
     try:
         logged_in_user = session["user_id"]
     except KeyError:
         return redirect(url_for("index"))
 
     #Get the User object of the person that you want to follow
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(id=user_id).first()
 
     #Ensure the user that you want to follow exists
     if user is None:
-        flash('User %s not found.' % username)
+        flash('User %s not found.' % user_id)
         return redirect(url_for('index'))
 
     #Cannot follow yourself
     if user.id == logged_in_user:
         flash('You can\'t follow yourself!')
-        return redirect(url_for('profile', id=user.id))
+        return redirect(url_for('profile', user_id=user.id))
 
     me = User.query.filter_by(id=logged_in_user).first()
     u = me.follow(user)
     if u is None:
-        flash('Cannot follow ' + username + '.')
-        return redirect(url_for('profile', id=user.id))
+        flash('Cannot follow ' + user_id + '.')
+        return redirect(url_for('profile', user_id=user.id))
     db.session.add(u)
     db.session.commit()
-    flash('You are now following ' + username + '!')
-    return redirect(url_for('profile', id=user.id))
+    flash('You are now following ' + user_id + '!')
+    return redirect(url_for('profile', user_id=user.id))
 
 # UNFOLLOW SOMEONE ELSE
 
-@app.route('/unfollow/<username>')
+@app.route('/unfollow/<user_id>')
 @login_required
-def unfollow(username):
+def unfollow(user_id):
     try:
         logged_in_user = session["user_id"]
     except KeyError:
         return redirect(url_for("index"))
     
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(id=user_id).first()
 
     #Ensure the user that you want to follow exists
     if user is None:
-        flash('User %s not found.' % username)
+        flash('User %s not found.' % user_id)
         return redirect(url_for('index'))
 
     me = User.query.filter_by(id=logged_in_user).first()
@@ -215,16 +220,16 @@ def unfollow(username):
     #Cannot unfollow yourself
     if user == me:
         flash('You can\'t unfollow yourself!')
-        return redirect(url_for('profile', id=user.id))
+        return redirect(url_for('profile', user_id=user.id))
 
     u = me.unfollow(user)
     if u is None:
-        flash('Cannot unfollow ' + username + '.')
-        return redirect(url_for('profile', id=user.id))
+        flash('Cannot unfollow ' + user_id + '.')
+        return redirect(url_for('profile', user_id=user.id))
     db.session.add(u)
     db.session.commit()
-    flash('You have stopped following ' + username + '.')
-    return redirect(url_for('profile', id=user.id))
+    flash('You have stopped following ' + user_id + '.')
+    return redirect(url_for('profile', user_id=user.id))
 
 # EDIT ABOUT
 @app.route("/edit/aboutme", methods=["POST"])

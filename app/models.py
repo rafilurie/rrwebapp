@@ -78,7 +78,7 @@ class User(db.Model, UserMixin):
     
     # Shows how the object will be printed
     def __repr__(self):
-        return '<User %r>' % (self.username)
+        return '<User %r>' % (self.first_name + ' '+self.last_name)
 
     def get_profile_url(self):
         return "/{0}".format(self.id)

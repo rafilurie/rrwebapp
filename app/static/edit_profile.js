@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
 
-    $("#edit-profile-form").submit(function(event) {
+    $('#edit-profile-form').on("click","#save-btn", function(){
         event.preventDefault();
         var post_url = "/edit/profile";
         var data = { 
@@ -11,7 +11,7 @@ $(document).ready(function() {
             company: $("input#company").val(),
             linkedin: $("input#linkedin").val()
         };
-        if ($("textarea#about_me").val() != "" && $("input#job_title").val() != "" && $("input#company").val() != "" && $("input#linkedin").val() != "") {
+        if ($("textarea#about_me").val() != "" || $("input#job_title").val() != "" || $("input#company").val() != "" || $("input#linkedin").val() != "") {
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
@@ -61,7 +61,9 @@ var update_aboutme = function(about_me, job_title, company, linkedin) {
         new_html += "</div>";
         $("#linkedin-text").html(new_html);
     }
-    $('#edit-profile-form').modal('toggle');
+    // $('#edit-profile-modal').modal('toggle');
+    $('div.modal-content').hide();
+    window.location.reload();
 
 }
 

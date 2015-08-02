@@ -11,21 +11,29 @@
     <h1 class="row">{{ user.first_name }} {{ user.last_name }}</h1>
 
     <!-- LEFT SIDE -->
-    <div class="col-md-4" id="left-column">
+    <div class="col-md-3" id="left-column">
         
         <!-- Display following/follower information -->
         <div class="row" id="following-container">
-            {{ user.followers.count()-1 }} followers | 
+
+            {% if user.followers.count()-1 == 1 %}
+                {{ user.followers.count()-1 }} follower |
+            {% else %}
+                {{ user.followers.count()-1 }} followers | 
+            {% endif %}
+            
             {% if user.id == me.id %}
                 <button id="edit-profile-btn" type="" data-toggle="modal" data-target="#edit-profile-modal">Edit Profile</button>
             {% elif not me.is_following(user) %}
-                <a href="{{ url_for('follow', username=user.username) }}">Follow</a>
+                <a href="{{ url_for('follow', user_id=user.id) }}">Follow</a>
             {% else %}
-                <a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>
+                <a href="{{ url_for('unfollow', user_id=user.id) }}">Unfollow</a>
             {% endif %}
         </div>
 
         <!-- Display Extra information -->
+        <div id="extra-information-container">
+        </div>
         {% if user.about_me %}
             About Me: <div id='about_me-text'>{{ user.about_me }}</div>
         {% endif %}
@@ -48,9 +56,9 @@
     </div>
 
     <!-- ARTICLES -->
-    <div class="col-md-8" id="right-column">
+    <div class="col-md-9" id="right-column">
 
-        <div class="articles-container col-md-8">
+        <div class="articles-container col-md-10">
             
             {% for article in articles %}
                 {% include 'article_post_partial.html' %}
