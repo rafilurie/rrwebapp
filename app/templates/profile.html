@@ -14,38 +14,51 @@
     <div class="col-md-3" id="left-column">
         
         <!-- Display following/follower information -->
-        <div class="row" id="following-container">
+        <div id="following-container">
 
-            {% if user.followers.count()-1 == 1 %}
-                {{ user.followers.count()-1 }} follower |
-            {% else %}
-                {{ user.followers.count()-1 }} followers | 
-            {% endif %}
+
+            <div class="col-md-6">
+                <div class="row">
+                    {% if user.followers.count()-1 == 1 %}
+                        Follower
+                    {% else %}
+                        Followers
+                    {% endif %}
+                </div>
+                <div class="row">
+                    {{ user.followers.count()-1 }} 
+                </div>
+            </div>
             
-            {% if user.id == me.id %}
-                <button id="edit-profile-btn" type="" data-toggle="modal" data-target="#edit-profile-modal">Edit Profile</button>
-            {% elif not me.is_following(user) %}
-                <a href="{{ url_for('follow', user_id=user.id) }}">Follow</a>
-            {% else %}
-                <a href="{{ url_for('unfollow', user_id=user.id) }}">Unfollow</a>
-            {% endif %}
+            <div class="col-md-offset-6 col-md-6">
+                {% if user.id == me.id %}
+                    <button id="edit-profile-btn" type="" data-toggle="modal" data-target="#edit-profile-modal">Edit Profile</button>
+                {% elif not me.is_following(user) %}
+                    <a href="{{ url_for('follow', user_id=user.id) }}">Follow</a>
+                {% else %}
+                    <a href="{{ url_for('unfollow', user_id=user.id) }}">Unfollow</a>
+                {% endif %}
+            </div>
+            
         </div>
-
+        <br>
+        <br>
         <!-- Display Extra information -->
         <div id="extra-information-container">
+            {% if user.about_me %}
+                About Me: <div id='about_me-text'>{{ user.about_me }}</div>
+            {% endif %}
+            {% if user.job_title %}
+                Job Title: <div id='job_title-text'>{{ user.job_title }}</div>
+            {% endif %}
+            {% if user.company %}
+                Company: <div id='company-text'>{{ user.company }}</div>
+            {% endif %}
+            {% if user.linkedin_url %}
+                LinkedIn: <div id='linkedin-text'><a href="{{ user.linkedin_url }}">{{ user.linkedin_url }}</a></div>
+            {% endif %}
         </div>
-        {% if user.about_me %}
-            About Me: <div id='about_me-text'>{{ user.about_me }}</div>
-        {% endif %}
-        {% if user.job_title %}
-            Job Title: <div id='job_title-text'>{{ user.job_title }}</div>
-        {% endif %}
-        {% if user.company %}
-            Company: <div id='company-text'>{{ user.company }}</div>
-        {% endif %}
-        {% if user.linkedin_url %}
-            LinkedIn: <div id='linkedin-text'>{{ user.linkedin_url }}</div>
-        {% endif %}
+        
 
         <div id="edit-profile-modal" class="modal" data-backdrop=""  role="dialog">
             <div class="modal-dialog">

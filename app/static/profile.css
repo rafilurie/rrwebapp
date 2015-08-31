@@ -17,11 +17,11 @@ h1 {
 }
 
 #left-column {
-	border: solid red 1px;
+	/*border: solid red 1px;*/
 }
 
 #following-container {
-	border: solid red 1px;
+	/*border: solid red 1px;*/
 }
 
 #edit-profile-btn {
@@ -29,12 +29,12 @@ h1 {
 }
 
 #right-column {
-	border: solid red 1px;
+	/*border: solid red 1px;*/
 }
 
 
 #aboutme-things {
-	border: solid red 1px;
+	/*border: solid red 1px;*/
 	margin-top: 20px;
 }
 

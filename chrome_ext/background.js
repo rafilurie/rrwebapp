@@ -61,3 +61,7 @@ function postHelper(xhr, url, data) {
     // send the collected data as JSON
     xhr.send(JSON.stringify(data));
 }
+
+chrome.commands.onCommand.addListener(function(command) {
+    console.log('Command:', command);
+});
