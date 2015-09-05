@@ -46,7 +46,7 @@
 
             <!-- Difference is more than a month and less than a year -->
             {% elif 2592000 <= ((curr_time - article.created).total_seconds()) <= 31104000 %}
-                {% if ((curr_time - article.created).total_seconds())//86400 == 1.0 %}
+                {% if ((curr_time - article.created).total_seconds())//2592000 == 1.0 %}
                     <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//2592000 }} month ago</span>
                 {% else %}
                     <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//2592000 }} months ago</span>
@@ -54,7 +54,7 @@
 
             <!-- Difference is more than a year -->
             {% elif 31104000 <= ((curr_time - article.created).total_seconds()) %}
-                {% if ((curr_time - article.created).total_seconds())//86400 == 1.0 %}
+                {% if ((curr_time - article.created).total_seconds())//31104000 == 1.0 %}
                     <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//31104000 }} year ago</span>
                 {% else %}
                     <span class="posted-by">{{ ((curr_time - article.created).total_seconds())//31104000 }} years ago</span>
