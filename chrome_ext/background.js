@@ -1,4 +1,4 @@
-var POST_ROUTE = 'http://127.0.0.1:5000/post';
+var POST_ROUTE = 'http://thoughtmic.herokuapp.com/post';
 
 // Set up context menu at install time.
 chrome.runtime.onInstalled.addListener(function() {
