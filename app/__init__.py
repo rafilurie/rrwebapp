@@ -4,7 +4,6 @@ from flask.ext.sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.config.from_object('config')
 db = SQLAlchemy(app)
-mail = Mail(app)
 
 from app import routes, models
 from flask_user import SQLAlchemyAdapter, UserManager
