@@ -111,13 +111,11 @@ def empty():
 def post():
     try:
         logged_in_user = session["user_id"]
-        print "LOGGED IN: ", logged_in_user
     except KeyError:
         return redirect(url_for("index"))
 
     if request.method == "POST":
         req_dic = json.loads(request.data)
-        print "req_dic", req_dic
         if request:
             try:
                 
@@ -147,20 +145,29 @@ def post():
         return redirect(url_for("empty"))
     return redirect(url_for("empty"))
 
+# DELETE ARTICLE
+@app.route("/delete", methods=["GET", "POST"])
+def delete():
+    try: 
+        print(request.json)
+    except KeyError:
+        return redirect(url_for("index"))
+    linkID = int(request.json)
+    print "We are gonna delete ", linkID
+    db.session.delete(Article.query.filter(Article.id == linkID).first());
+    db.session.commit();
+    print "Deleted Article ", linkID
+    return redirect(url_for("index"))
+
 # PROFILE PAGE
 @app.route("/<user_id>")
 def profile(user_id):
     try:
         logged_in_user = session["user_id"]
-        print "User session: ", session["user_id"]
-        print "User logged_in_user: ", logged_in_user
     except KeyError:
         return redirect(url_for("index"))
-    print "User ID: ", user_id
     articles = Article.query.filter(Article.user_id == user_id).order_by(Article.created.desc()).all()
-    print "ARTICLES: ", articles
     user = User.query.filter(User.id == user_id).first()
-    print "USER :", user
     me = User.query.filter(User.id == logged_in_user).first()
 
     return render_template("profile.html", articles=articles, curr_time=datetime.now(), user=user, me=me)
