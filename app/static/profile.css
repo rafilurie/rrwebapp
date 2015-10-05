@@ -21,11 +21,11 @@ h1 {
 }
 
 #following-container {
-	/*border: solid red 1px;*/
+	/*border: solid blue 1px;*/
 }
 
 #edit-profile-btn {
-
+/*	padding: 0px 0px 0px 0px;*/
 }
 
 #right-column {

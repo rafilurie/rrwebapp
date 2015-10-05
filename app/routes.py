@@ -117,7 +117,7 @@ def post():
 
     if request.method == "POST":
         req_dic = json.loads(request.data)
-        
+        print "req_dic", req_dic
         if request:
             try:
                 

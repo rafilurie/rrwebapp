@@ -1,4 +1,5 @@
-var POST_ROUTE = 'http://thoughtmic.herokuapp.com/post';
+// var POST_ROUTE = 'http://thoughtmic.herokuapp.com/post';
+var POST_ROUTE = 'http://127.0.0.1:5000/post';
 
 // Set up context menu at install time.
 chrome.runtime.onInstalled.addListener(function() {
@@ -48,6 +49,21 @@ chrome.contextMenus.onClicked.addListener(onClickHandler);
     xhr.send();
 };
 
+//Add the link of the current tab when you use the keyboard shortcut
+// chrome.commands.onCommand.addListener( function(command) {
+//     alert('Command:', command);
+//     var data = { title: tab.title, url: tab.url };
+//     // construct an HTTP request
+//     var xhr = new XMLHttpRequest();
+//     xhr.onreadystatechange = function() {
+//     if (xhr.readyState == 4) {
+//         xhr.responseText;
+//         }
+//     }
+//     postHelper(xhr, POST_ROUTE, data);
+//     flashIcon();
+// });
+
 function getTitle(str) { 
     var matches = str.match(/<title>[\S\s]*?<\/title>/gi);
     return matches[0].replace(/(<\/?[^>]+>)/gi, '');
@@ -61,7 +77,3 @@ function postHelper(xhr, url, data) {
     // send the collected data as JSON
     xhr.send(JSON.stringify(data));
 }
-
-chrome.commands.onCommand.addListener(function(command) {
-    console.log('Command:', command);
-});
