@@ -113,7 +113,6 @@ def post():
         logged_in_user = session["user_id"]
     except KeyError:
         return redirect(url_for("index"))
-
     if request.method == "POST":
         req_dic = json.loads(request.data)
         if request:
