@@ -1,13 +1,22 @@
 .article-container{
 	padding: 7px 5px 7px 5px;
-	margin: 9px 0px 9px 0px;
-	border: solid #6D6D6D 1px;
-	border-radius: 5px;
+	margin: 0px 0px 9px 0px;
+	background: white !important;
+	border: solid #B6B6B6 1px;
+	border-radius: 0px;
 
 }
 
 .content-container{
 
+}
+
+.author-date-line {
+	padding: 0px !important;
+}
+
+.delete-link {
+	padding: 0px !important;
 }
 
 .article-title {
@@ -21,7 +30,8 @@
 }
 
 .posted-line{
-	font-style: italic;
+	padding: 8px 0px 0px 0px;
+	
 }
 
 .posted-by{
@@ -36,4 +46,8 @@
 .article-poster:hover {
 	color: #104BA6;
 	text-decoration: none;
+}
+
+.author-date-line{
+	font-style: italic;
 }

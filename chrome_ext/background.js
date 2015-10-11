@@ -1,5 +1,6 @@
 // var POST_ROUTE = 'http://thoughtmic.herokuapp.com/post';
 var POST_ROUTE = 'http://127.0.0.1:5000/post';
+var CURRENT_TAB;
 
 // Set up context menu at install time.
 chrome.runtime.onInstalled.addListener(function() {
@@ -51,8 +52,15 @@ chrome.contextMenus.onClicked.addListener(onClickHandler);
 
 //Add the link of the current tab when you use the keyboard shortcut
 chrome.commands.onCommand.addListener( function(command) {
-    var tabTitle = window.location.href;
-    var tabURL = window.location.href;
+    chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+        CURRENT_TAB = tabs[0];
+        postKeyboardShortcut(CURRENT_TAB);
+    });
+});
+
+function postKeyboardShortcut(tab) { 
+    var tabTitle = CURRENT_TAB.title;
+    var tabURL = CURRENT_TAB.url;
     var data = { title: tabTitle, url: tabURL };
     //construct an HTTP request
     var xhr = new XMLHttpRequest();
@@ -63,7 +71,8 @@ chrome.commands.onCommand.addListener( function(command) {
     }
     postHelper(xhr, POST_ROUTE, data);
     flashIcon();
-});
+}
+
 
 function getTitle(str) { 
     var matches = str.match(/<title>[\S\s]*?<\/title>/gi);

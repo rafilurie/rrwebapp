@@ -156,7 +156,7 @@ def delete():
     db.session.delete(Article.query.filter(Article.id == linkID).first());
     db.session.commit();
     print "Deleted Article ", linkID
-    return redirect(url_for("index"))
+    return jsonify({'status': 'OK'})
 
 # PROFILE PAGE
 @app.route("/<user_id>")
@@ -238,17 +238,17 @@ def unfollow(user_id):
     return redirect(url_for('profile', user_id=user.id))
 
 # EDIT ABOUT
-@app.route("/edit/aboutme", methods=["POST"])
-def add_comment():
-	try:
-		logged_in_user = session["user_id"]
-	except KeyError:
-		return redirect(url_for("index"))
-	content = request.json.get('content')
-	user = User.query.filter(User.id == logged_in_user).first()
-	user.about_me = content
-	db.session.commit()
-	return json.dumps({'success': True, 'contents': content}), 200, {'ContentType': 'application/json'}
+# @app.route("/edit/aboutme", methods=["POST"])
+# def add_comment():
+# 	try:
+# 		logged_in_user = session["user_id"]
+# 	except KeyError:
+# 		return redirect(url_for("index"))
+# 	content = request.json.get('content')
+# 	user = User.query.filter(User.id == logged_in_user).first()
+# 	user.about_me = content
+# 	db.session.commit()
+# 	return json.dumps({'success': True, 'contents': content}), 200, {'ContentType': 'application/json'}
 
 # EDIT ABOUT
 @app.route("/edit/profile", methods=["POST"])

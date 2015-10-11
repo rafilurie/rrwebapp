@@ -17,7 +17,8 @@ window.onload = function() {
             contentType: "application/json; charset=utf-8",
             url: post_url,
             data: (linkID),
-            success: function(data) {
+            success: function(response) {
+                $('#article'+linkID).remove();
             },
             dataType: "json"
         });

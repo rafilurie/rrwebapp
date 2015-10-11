@@ -131,83 +131,83 @@ class Article(db.Model):
 
 ####################################################################################################################################
 
-class Perpetrator(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+# class Perpetrator(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
 
-    created = db.Column(db.DateTime())
-    deleted = db.Column(db.DateTime())
+#     created = db.Column(db.DateTime())
+#     deleted = db.Column(db.DateTime())
 
-    name = db.Column(db.String(40), nullable=False)
-    display_name = db.Column(db.String(40))
-    photos = db.relationship('Photo', backref=db.backref('perpetrators', lazy='joined'),
-                               lazy='dynamic')
+#     name = db.Column(db.String(40), nullable=False)
+#     display_name = db.Column(db.String(40))
+#     photos = db.relationship('Photo', backref=db.backref('perpetrators', lazy='joined'),
+#                                lazy='dynamic')
 
-    # the user associated with this perpetrator
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+#     # the user associated with this perpetrator
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __repr__(self):
-        return '<Perpetrator %r, %r>' % (self.name, self.user_id)
+#     def __repr__(self):
+#         return '<Perpetrator %r, %r>' % (self.name, self.user_id)
 
-    # def get_photo_url(self):
-    #     return "/reported/{0}/photos".format(self.id)
+#     # def get_photo_url(self):
+#     #     return "/reported/{0}/photos".format(self.id)
 
-    def __init__(self, name, display_name, user_id):
-        self.name = name
-        self.user_id = user_id
-        self.display_name = display_name
-        self.created = datetime.now()
-
-
-class Photo(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-
-    comments = db.relationship('Comment', backref=db.backref('photos', lazy='joined'),
-                               lazy='dynamic')
-
-    created = db.Column(db.DateTime())
-    when = db.Column(db.DateTime())
-    deleted = db.Column(db.DateTime())
-
-    extension = db.Column(db.String(1000))
-
-    # the user associated with this photo
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    perpetrator_id = db.Column(db.Integer, db.ForeignKey('perpetrator.id'))
-
-    def list_comments(self):
-        return self.comments.all()
-
-    def get_url(self):
-        url = "/images/{0}.{1}".format(self.id, self.extension)
-        return url
-
-    def get_help_url(self):
-        url = "/detail/{0}".format(self.id)
-        return url
-
-    def __repr__(self):
-        return '<Photo %r, %r>' % (self.extension, self.user_id)
-
-    def __init__(self, extension, user_id, when=datetime.now()):
-        self.extension = extension
-        self.user_id = user_id
-        self.created = datetime.now()
-        self.when = when
+#     def __init__(self, name, display_name, user_id):
+#         self.name = name
+#         self.user_id = user_id
+#         self.display_name = display_name
+#         self.created = datetime.now()
 
 
-class Comment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(100000))
+# class Photo(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
 
-    created = db.Column(db.DateTime())
-    deleted = db.Column(db.DateTime())
+#     comments = db.relationship('Comment', backref=db.backref('photos', lazy='joined'),
+#                                lazy='dynamic')
 
-    photo_id = db.Column(db.Integer, db.ForeignKey('photo.id'))
+#     created = db.Column(db.DateTime())
+#     when = db.Column(db.DateTime())
+#     deleted = db.Column(db.DateTime())
 
-    def __repr__(self):
-        return '<Comment %r, %r>' % (self.content, self.photo_id)
+#     extension = db.Column(db.String(1000))
 
-    def __init__(self, content, photo_id):
-        self.content = content
-        self.photo_id = photo_id
-        self.created = datetime.now()
+#     # the user associated with this photo
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+#     perpetrator_id = db.Column(db.Integer, db.ForeignKey('perpetrator.id'))
+
+#     def list_comments(self):
+#         return self.comments.all()
+
+#     def get_url(self):
+#         url = "/images/{0}.{1}".format(self.id, self.extension)
+#         return url
+
+#     def get_help_url(self):
+#         url = "/detail/{0}".format(self.id)
+#         return url
+
+#     def __repr__(self):
+#         return '<Photo %r, %r>' % (self.extension, self.user_id)
+
+#     def __init__(self, extension, user_id, when=datetime.now()):
+#         self.extension = extension
+#         self.user_id = user_id
+#         self.created = datetime.now()
+#         self.when = when
+
+
+# class Comment(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     content = db.Column(db.String(100000))
+
+#     created = db.Column(db.DateTime())
+#     deleted = db.Column(db.DateTime())
+
+#     photo_id = db.Column(db.Integer, db.ForeignKey('photo.id'))
+
+#     def __repr__(self):
+#         return '<Comment %r, %r>' % (self.content, self.photo_id)
+
+#     def __init__(self, content, photo_id):
+#         self.content = content
+#         self.photo_id = photo_id
+#         self.created = datetime.now()

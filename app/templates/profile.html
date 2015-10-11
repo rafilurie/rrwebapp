@@ -14,23 +14,20 @@
     <div class="col-md-3" id="left-column">
         
         <!-- Display following/follower information -->
-        <div id="following-container">
+        <div id="following-container" class="col-md-12">
 
 
             <div class="col-md-7">
                 <div class="row">
                     {% if user.followers.count()-1 == 1 %}
-                        Follower
+                        Follower: {{ user.followers.count()-1 }} 
                     {% else %}
-                        Followers
+                        Followers: {{ user.followers.count()-1 }} 
                     {% endif %}
-                </div>
-                <div class="row">
-                    {{ user.followers.count()-1 }} 
                 </div>
             </div>
             
-            <div class="col-md-5">
+            <div id='following-container-action' class="col-md-5">
                 {% if user.id == me.id %}
                     <button id="edit-profile-btn" type="" data-toggle="modal" data-target="#edit-profile-modal">Edit Profile</button>
                 {% elif not me.is_following(user) %}
@@ -41,21 +38,26 @@
             </div>
             
         </div>
+
         <br>
         <br>
         <!-- Display Extra information -->
         <div id="extra-information-container">
             {% if user.about_me %}
-                About Me: <div id='about_me-text'>{{ user.about_me }}</div>
+                <div id='about_me-text'>{{ user.about_me }}</div>
             {% endif %}
-            {% if user.job_title %}
-                Job Title: <div id='job_title-text'>{{ user.job_title }}</div>
-            {% endif %}
-            {% if user.company %}
-                Company: <div id='company-text'>{{ user.company }}</div>
+            <hr>
+            {% if user.job_title and user.company %}
+                <div id='job-company'>
+                    <span id='job_title-text'>{{ user.job_title }}</span> at <span id='company-text'>{{ user.company }}</span>
+                </div>
+            {% elif user.job_title %}
+                Working as a <div id='job_title-text'>{{ user.job_title }}</div>
+            {% elif user.company %}
+                Works at at <div id='company-text'>{{ user.company }}</div>
             {% endif %}
             {% if user.linkedin_url %}
-                LinkedIn: <div id='linkedin-text'><a target="_blank" href="{{ user.linkedin_url }}">{{ user.linkedin_url }}</a></div>
+                LinkedIn: <span id='linkedin-text'><a target="_blank" href="{{ user.linkedin_url }}">{{ user.linkedin_url }}</a></span>
             {% endif %}
         </div>
         
