@@ -1,3 +1,4 @@
+
 .article-container{
 	padding: 7px 5px 7px 5px;
 	margin: 0px 0px 9px 0px;
@@ -51,3 +52,49 @@
 .author-date-line{
 	/*font-style: italic;*/
 }
+
+.popup
+    {
+        display: none;
+        position: absolute;
+        left: 16;
+        top: 0px;
+        width: 120px;
+        margin: 80px 0px 0px 28px;
+        color: black;
+        background: #B6B6B6;
+        z-index: 1;
+    }
+
+.likers-list-container {
+	padding: 10px 0px 10px 10px;
+}
+
+.likers-list-liker {
+	font-size: 12px;
+}
+
+.likers-link {
+
+}
+
+.like-link {
+
+}
+
+.unlike-link {
+	font-weight: bold;
+}
+
+#like-link-container {
+	padding: 0px 10px 0px 0px;
+}
+
+.like-line {
+	font-size: 13px;
+}
+
+.number-likers {
+	/*display: none;*/
+}
+

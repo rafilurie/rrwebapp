@@ -23,5 +23,22 @@ window.onload = function() {
             dataType: "json"
         });
     });
+    
+
+    //Show who has liked a post on hover of link
+    $('.likers-link').mouseover(function(event) {
+        event.preventDefault();
+        linkID = this.id.slice(11);
+        //alert('This is the link ID: '+ linkID);
+        $('#likers-popup'+linkID).show();
+    });
+
+    //Hide who has liked a post when done hovering on link
+    $('.likers-link').mouseout(function(event) {
+        event.preventDefault();
+        linkID = this.id.slice(11);
+        //alert('This is the link ID: '+ linkID);
+        $('#likers-popup'+linkID).hide();
+    });
 
 }

@@ -7,6 +7,13 @@ from flask import url_for
 
 # Following.followers association table
 
+likers = db.Table('likers', 
+    db.Column('liker_id', db.Integer, db.ForeignKey('user.id')), 
+    db.Column('liked_article_id', db.Integer, db.ForeignKey('article.id')), 
+    db.Column('created', db.DateTime()),
+    db.PrimaryKeyConstraint('liker_id', 'liked_article_id')
+)
+
 followers = db.Table('followers', 
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')), 
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id')), 
@@ -45,6 +52,15 @@ class User(db.Model, UserMixin):
         primaryjoin=(followers.c.follower_id == id), 
         secondaryjoin=(followers.c.followed_id == id), 
         backref=db.backref('followers', lazy='dynamic'), 
+        lazy='dynamic'
+    )
+
+    liked = db.relationship(
+        'Article', 
+        secondary=likers, 
+        # primaryjoin=(likers.c.liker_id == id), 
+        # secondaryjoin=(likers.c.liked_article_id == id), 
+        backref=db.backref('likers', lazy='dynamic'), 
         lazy='dynamic'
     )
 
@@ -98,6 +114,25 @@ class User(db.Model, UserMixin):
 
     def followed_posts(self):
         return Article.query.join(followers, (followers.c.followed_id == Article.user_id)).filter(followers.c.follower_id == self.id).order_by(Article.created.desc())
+
+    # //////
+
+    def like(self, article):
+        if not self.has_liked(article):
+            self.liked.append(article)
+            return self
+
+    def unlike(self, article):
+        if self.has_liked(article):
+            self.liked.remove(article)
+            return self
+
+    def has_liked(self, article):
+        return self.liked.filter(likers.c.liked_article_id == article.id).count() > 0
+
+    # def liked_posts(self):
+    # need to do this method
+    #     return Article.query.join(followers, (followers.c.followed_id == Article.user_id)).filter(followers.c.follower_id == self.id).order_by(Article.created.desc())
 
     # @classmethod
     # def get(cls,id):

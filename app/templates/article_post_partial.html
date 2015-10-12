@@ -1,5 +1,5 @@
 <link href= '{{ url_for("static", filename="article_post_partial.css") }}' rel='stylesheet' />
-<script src='{{ url_for("static", filename="delete-btn.js") }}'></script>
+<script src='{{ url_for("static", filename="article-btns.js") }}'></script>
 
 
 <div class="article-container col-md-12" id='article{{ article.id }}'>
@@ -68,6 +68,35 @@
             <div class="col-md-1 delete-link">
                 <a class='delete-btn' id='delete{{ article.id }}'>Delete</a>
             </div>
+        </div>
+
+        <div class='row like-line'>
+            <span class='' id='like-link-container'>
+                {% if not me.has_liked(article) %}
+                    <a class='like-link' href="{{ url_for('like', article_id=article.id) }}">Like</a>
+                {% else %}
+                    <a class='unlike-link' href="{{ url_for('unlike', article_id=article.id) }}">Liked</a>
+                {% endif %}
+            </span>
+
+            {% if article.likers.count() > 0 %}
+                <span class='number-likers' id='number-likers{{ article.id }}'>
+                    {% if article.likers.count() == 1 %}
+                        <a class='likers-link' id='likers-link{{ article.id }}'>{{ article.likers.count()}} person</a> likes this.
+                    {% else %}
+                        <a class='likers-link' id='likers-link{{ article.id }}'>{{ article.likers.count()}} people</a> like this.
+                    {% endif %}
+
+                    <div class="popup" id='likers-popup{{ article.id }}'>
+                        <div class='likers-list-container'>
+                            {% for liker in article.likers.all() %}
+                                <div class='likers-list-liker'>{{ liker.first_name }} {{ liker.last_name }} </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </span>
+            {% endif %}
+
         </div>
 
     </div>

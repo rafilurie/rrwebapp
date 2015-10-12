@@ -201,7 +201,7 @@ def follow(user_id):
         return redirect(url_for('profile', user_id=user.id))
     db.session.add(u)
     db.session.commit()
-    flash('You are now following ' + user_id + '!')
+    #flash('You are now following ' + user_id + '!')
     return redirect(url_for('profile', user_id=user.id))
 
 # UNFOLLOW SOMEONE ELSE
@@ -234,8 +234,64 @@ def unfollow(user_id):
         return redirect(url_for('profile', user_id=user.id))
     db.session.add(u)
     db.session.commit()
-    flash('You have stopped following ' + user_id + '.')
+    #flash('You have stopped following ' + user_id + '.')
     return redirect(url_for('profile', user_id=user.id))
+
+# LIKE AN ARTICLE
+
+@app.route('/like/<article_id>')
+@login_required
+def like(article_id):
+    try:
+        logged_in_user = session["user_id"]
+    except KeyError:
+        return redirect(url_for("index"))
+
+    #Get the Article object that you want to like
+    article = Article.query.filter_by(id=article_id).first()
+
+    #Ensure the article that you want to like exists
+    if article is None:
+        flash('Article %s not found.' % article_id)
+        return redirect(url_for('index'))
+
+    me = User.query.filter_by(id=logged_in_user).first()
+    u = me.like(article)
+    if u is None:
+        flash('Cannot like article id:' + article_id + '.')
+        return redirect(url_for('profile', user_id=Article.query.filter_by(id=article_id).first().get_article_user().id))
+    db.session.add(u)
+    db.session.commit()
+    #flash('You liked article id:' + article_id + '!')
+    return redirect(url_for('profile', user_id=Article.query.filter_by(id=article_id).first().get_article_user().id))
+
+# UNLIKE AN ARTICLE
+
+@app.route('/unlike/<article_id>')
+@login_required
+def unlike(article_id):
+    try:
+        logged_in_user = session["user_id"]
+    except KeyError:
+        return redirect(url_for("index"))
+    
+    #Get the Article object that you want to like
+    article = Article.query.filter_by(id=article_id).first()
+
+    #Ensure the article that you want to like exists
+    if article is None:
+        flash('Article %s not found.' % article_id)
+        return redirect(url_for('index'))
+
+    me = User.query.filter_by(id=logged_in_user).first()
+    u = me.unlike(article)
+    if u is None:
+        flash('Cannot unlike article id:' + article_id + '.')
+        return redirect(url_for('profile', user_id=Article.query.filter_by(id=article_id).first().get_article_user().id))
+    db.session.add(u)
+    db.session.commit()
+    #flash('You unliked article id:' + article_id + '.')
+    return redirect(url_for('profile', user_id=Article.query.filter_by(id=article_id).first().get_article_user().id))
 
 # EDIT ABOUT
 # @app.route("/edit/aboutme", methods=["POST"])
