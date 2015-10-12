@@ -13,40 +13,27 @@
     <!-- LEFT SIDE -->
     <div class="col-md-3" id="left-column">
         
-        <!-- Display following/follower information -->
-        <div id="following-container" class="col-md-12">
-
-
-            <div class="col-md-7">
-                <div class="row">
-                    {% if user.followers.count()-1 == 1 %}
-                        Follower: {{ user.followers.count()-1 }} 
-                    {% else %}
-                        Followers: {{ user.followers.count()-1 }} 
-                    {% endif %}
-                </div>
-            </div>
-            
-            <div id='following-container-action' class="col-md-5">
-                {% if user.id == me.id %}
-                    <button id="edit-profile-btn" type="" data-toggle="modal" data-target="#edit-profile-modal">Edit Profile</button>
-                {% elif not me.is_following(user) %}
-                    <a href="{{ url_for('follow', user_id=user.id) }}">Follow</a>
+       <!--  <div class="col-md-7"> -->
+        <div class="row">
+            <!-- Display following/follower information -->
+            <div class='col-md-12' id='left-panel-header'>
+                {% if user.followers.count()-1 == 1 %}
+                    Follower: {{ user.followers.count()-1 }} 
                 {% else %}
-                    <a href="{{ url_for('unfollow', user_id=user.id) }}">Unfollow</a>
-                {% endif %}
+                    Followers: {{ user.followers.count()-1 }} 
+                {% endif %} 
             </div>
-            
         </div>
 
-        <br>
-        <br>
         <!-- Display Extra information -->
-        <div id="extra-information-container">
+            
+        <div id='about-me-container' class='col-md-12'>
             {% if user.about_me %}
                 <div id='about_me-text'>{{ user.about_me }}</div>
             {% endif %}
-            <hr>
+        </div>
+
+        <div class="extra-information-container col-md-12">
             {% if user.job_title and user.company %}
                 <div id='job-company'>
                     <span id='job_title-text'>{{ user.job_title }}</span> at <span id='company-text'>{{ user.company }}</span>
@@ -60,14 +47,22 @@
                 LinkedIn: <span id='linkedin-text'><a target="_blank" href="{{ user.linkedin_url }}">{{ user.linkedin_url }}</a></span>
             {% endif %}
         </div>
-        
-
-        <div id="edit-profile-modal" class="modal" data-backdrop=""  role="dialog">
-            <div class="modal-dialog">
-                {% include 'modal_partial.html' %}
-            </div>
+            
+        <div id='edit-profile-link-container' class='col-md-5'>
+            {% if user.id == me.id %}
+                <a id="edit-profile-btn" type="" data-toggle="modal" data-target="#edit-profile-modal">Edit Profile</a>
+            {% elif not me.is_following(user) %}
+                <a href="{{ url_for('follow', user_id=user.id) }}">Follow</a>
+            {% else %}
+                <a href="{{ url_for('unfollow', user_id=user.id) }}">Unfollow</a>
+            {% endif %}
         </div>
+    </div>
 
+    <div id="edit-profile-modal" class="modal" data-backdrop=""  role="dialog">
+        <div class="modal-dialog">
+            {% include 'modal_partial.html' %}
+        </div>
     </div>
 
     <!-- ARTICLES -->

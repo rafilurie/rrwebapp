@@ -31,23 +31,40 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 });
 
 // add click event
-chrome.contextMenus.onClicked.addListener(onClickHandler);
+chrome.contextMenus.onClicked.addListener(contextMenusOnClickHandler);
 
-    // The onClicked callback function.
-    function onClickHandler(info, tab) {
-        var data, title;
-        // construct an HTTP request
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            title = getTitle(xhr.responseText);
-            data = { title: title, url: info.linkUrl };
-            postHelper(xhr, POST_ROUTE, data);
-            flashIcon();
-            }
+// The onClicked callback function.
+function contextMenusOnClickHandler(info, tab) {
+    // alert('This url: '+info.linkUrl);
+    // var data, title;
+    // // construct an HTTP request
+    // var xhr = new XMLHttpRequest();
+    // alert('I am here');
+    // xhr.onreadystatechange = function() {
+    // alert('not I am here');
+    // if (xhr.readyState == 4) {
+    //     alert('in if');
+    //     title = getTitle(xhr.responseText);
+    //     alert('title: ' + title);
+    //     data = { title: title, url: info.linkUrl };
+    //     postHelper(xhr, POST_ROUTE, data);
+    //     flashIcon();
+    //     }
+    // }
+    // xhr.open("GET", info.linkUrl, true);
+    // xhr.send();
+
+    var data = { title: info.linkUrl, url: info.linkUrl };
+    // construct an HTTP request
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+        alert(xhr.responseText);
+        xhr.responseText;
+        }
     }
-    xhr.open("GET", info.linkUrl, true);
-    xhr.send();
+    postHelper(xhr, POST_ROUTE, data);
+    flashIcon();
 };
 
 //Add the link of the current tab when you use the keyboard shortcut
@@ -59,8 +76,8 @@ chrome.commands.onCommand.addListener( function(command) {
 });
 
 function postKeyboardShortcut(tab) { 
-    var tabTitle = CURRENT_TAB.title;
-    var tabURL = CURRENT_TAB.url;
+    var tabTitle = tab.title;
+    var tabURL = tab.url;
     var data = { title: tabTitle, url: tabURL };
     //construct an HTTP request
     var xhr = new XMLHttpRequest();

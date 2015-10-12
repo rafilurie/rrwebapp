@@ -12,7 +12,7 @@
 
     "browser_action": {
         "default_icon": "chrome_ext/icon16.png",
-        "default_title": "Read-mate!"
+        "default_title": "ThoughtMic"
     },
 
     "background": {

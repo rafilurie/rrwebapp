@@ -4,3 +4,16 @@
 	text-align: center;
 	padding: 5px 5px 5px 5px;
 }
+
+html,body {
+	font-family: 'Lato', sans-serif;
+}
+
+a {
+	cursor: pointer !important;
+}
+
+a:hover {
+	cursor: pointer !important;
+	text-decoration: none;
+}

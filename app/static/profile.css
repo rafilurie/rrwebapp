@@ -4,7 +4,6 @@ body {
 
 #user-profile {
 	margin-top: 80px;
-	font-family: Montserrat;
 }
 
 h1 {
@@ -17,27 +16,32 @@ h1 {
 }
 
 #left-column {
-	border: solid red 1px;
+	border: solid #B6B6B6 1px;
 	margin: 9px 0px 0px 0px;
+}
+
+#left-panel-header {
+	padding: 13px 0px 14px 15px;
+	background: #B6B6B6;
 }
 
 #following-container {
-	border: solid blue 1px;
-	background: red !important;
+/*	background: red !important;*/
 	margin: 9px 0px 0px 0px;
-	padding: 0px !important;
+	padding: 9px !important;
 }
 
-#following-container-action {
+#edit-profile-link-container {
 	padding: 0px;
-	margin: 0px 0px 0px 0px;
+	margin: 10px 0px 0px 0px;
+	font-size: 12;
 }
 
 #edit-profile-btn {
 /*	padding: 0px 0px 0px 0px;*/
-	background: white;
-	border: solid #B6B6B6 1px;
-	border-radius: 3px;
+	/*background: white;*/
+/*	border: solid #B6B6B6 1px;
+*/	border-radius: 3px;
 }
 
 #right-column {
@@ -45,14 +49,16 @@ h1 {
 	margin: 9px 0px 0px 0px;
 }
 
-
+#about-me-container {
+	padding: 10px 0px 10px 0px;
+}
 #aboutme-things {
 	/*border: solid red 1px;*/
 	margin-top: 10px;
 }
 
-#extra-information-container {
-	padding: 30px 0px 5px 0px;
+.extra-information-container {
+	padding: 0px 0px 0px 0px !important;
 }
 
 #edit-aboutme {

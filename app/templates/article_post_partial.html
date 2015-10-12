@@ -12,6 +12,7 @@
         <div class="row posted-line">
             <div class="author-date-line col-md-11">
                 <span class="posted-by">Posted by </span>
+                
                 <a class="article-poster" href='/{{ article.get_article_user().id }}'>{{ article.get_article_user().first_name }} {{ article.get_article_user().last_name }}</a>
 
                 <!-- Difference is less than a minute -->
