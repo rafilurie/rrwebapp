@@ -29,7 +29,7 @@ def index():
 	# articles = Article.query.order_by(Article.created.desc()).all()
 	me = User.query.filter(User.id == logged_in_user).first()
 	articles = me.followed_posts().all()
-	return render_template("feed.html", articles=articles, curr_time=datetime.now())
+	return render_template("feed.html", articles=articles, curr_time=datetime.now(), me=me)
 
 # HOMEPAGE
 @app.route("/welcome", methods=["GET", "POST"])
