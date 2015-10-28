@@ -5,7 +5,7 @@ var CURRENT_TAB;
 // Set up context menu at install time.
 chrome.runtime.onInstalled.addListener(function() {
   var context = "selection";
-  var title = "Add to ReadMate";
+  var title = "ThoughtMic";
   var id = chrome.contextMenus.create({"title": title, "contexts": [context],
                                          "id": "context" + context });  
 });
@@ -35,27 +35,9 @@ chrome.contextMenus.onClicked.addListener(contextMenusOnClickHandler);
 
 // The onClicked callback function.
 function contextMenusOnClickHandler(info, tab) {
-    // alert('This url: '+info.linkUrl);
-    // var data, title;
-    // // construct an HTTP request
-    // var xhr = new XMLHttpRequest();
-    // alert('I am here');
-    // xhr.onreadystatechange = function() {
-    // alert('not I am here');
-    // if (xhr.readyState == 4) {
-    //     alert('in if');
-    //     title = getTitle(xhr.responseText);
-    //     alert('title: ' + title);
-    //     data = { title: title, url: info.linkUrl };
-    //     postHelper(xhr, POST_ROUTE, data);
-    //     flashIcon();
-    //     }
-    // }
-    // xhr.open("GET", info.linkUrl, true);
-    // xhr.send();
 
-    var data = { title: info.linkUrl, url: info.linkUrl };
-    // construct an HTTP request
+    var url = info.linkUrl;
+    var title, data;
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
     if (xhr.readyState == 4) {
@@ -63,8 +45,26 @@ function contextMenusOnClickHandler(info, tab) {
         xhr.responseText;
         }
     }
-    postHelper(xhr, POST_ROUTE, data);
-    flashIcon();
+
+    $.ajax({
+        url: url,
+        async: true,
+        crossDomain: true,
+        success: function(html) {
+            
+            var matches = html.match(/<title>(.*?)<\/title>/);
+            title = matches[0].replace(/<title>/, '');
+            title = title.replace(/<\/title>/, '');
+            data = { title: title, url: url };
+            postHelper(xhr, POST_ROUTE, data);
+            flashIcon();
+        },
+        error: function(a, b, c) {
+            data = { title: url, url: url };
+            postHelper(xhr, POST_ROUTE, data);
+            flashIcon();
+        }
+    });
 };
 
 //Add the link of the current tab when you use the keyboard shortcut
@@ -79,6 +79,10 @@ function postKeyboardShortcut(tab) {
     var tabTitle = tab.title;
     var tabURL = tab.url;
     var data = { title: tabTitle, url: tabURL };
+
+    var url = info.linkUrl;
+    var title, data;
+
     //construct an HTTP request
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {

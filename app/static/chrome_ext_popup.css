@@ -1,0 +1,18 @@
+body {
+	background: white;
+	min-width:300px;
+}
+
+#like-btn {
+	font-size: 20px;
+	font-family: Lato, sans-serif;
+	padding: 4px 4px 4px 4px;
+	border: 1px blue;
+	color: blue;
+	text-decoration: none;
+}
+
+#like-btn:hover {
+	background: blue;
+	color: white;
+}

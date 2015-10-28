@@ -17,6 +17,7 @@
 
     "background": {
         "scripts": [
+            "app/static/jquery-2.1.4.min.js",
             "chrome_ext/background.js"
         ]
     },
