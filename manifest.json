@@ -4,7 +4,7 @@
     "manifest_version": 2,
     "description": "Article sharing",
 
-    "icons": { 
+    "icons": {
         "16": "chrome_ext/icon16.png",
         "48": "chrome_ext/icon48.png",
         "128": "chrome_ext/icon128.png"
@@ -17,11 +17,12 @@
 
     "background": {
         "scripts": [
+            "app/static/jquery.js",
             "chrome_ext/background.js"
         ]
     },
 
-    "permissions": 
+    "permissions":
     [
         "http://127.0.0.1:5000/empty/*",
         "http://*/",
