@@ -1,5 +1,5 @@
-// var POST_ROUTE = 'http://thoughtmic.herokuapp.com/post';
-var POST_ROUTE = 'http://127.0.0.1:5000/post';
+var POST_ROUTE = 'protected-coast-8574.herokuapp.com/post';
+// var POST_ROUTE = 'http://127.0.0.1:5000/post';
 var CONTEXT_MENU_TITLE = "Add to ThoughtMic";
 var CHROME_ICON_WHITE = "chrome_ext/icon_invert16.png";
 var CHROME_ICON_BLACK = "chrome_ext/icon16.png";
