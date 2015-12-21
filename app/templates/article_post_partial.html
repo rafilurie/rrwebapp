@@ -93,7 +93,11 @@
                     <div class="popup" id='likers-popup{{ article.id }}'>
                         <div class='likers-list-container'>
                             {% for liker in article.likers.all() %}
-                                <div class='likers-list-liker'>{{ liker.first_name }} {{ liker.last_name }} </div>
+                                {% if liker.first_name == me.first_name %}
+                                    <div class='likers-list-liker'>You </div>
+                                {% else %}
+                                    <div class='likers-list-liker' href="{{ url_for('profile', user_id=liker.id) }}">{{ liker.first_name }} {{ liker.last_name }} </div>
+                                {% endif %}
                             {% endfor %}
                         </div>
                     </div>
